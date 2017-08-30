@@ -11,11 +11,11 @@
 <body>
   <div class="container">
     <div class="row">
-      <div class="col-xs-6">
-        <input type="text" name="writing" id= "writingInput" required>
-      </div>
-      <div class="col-xs-6">
-        <input type="submit" value="write" class = "btn btn-primary btn-lg">
+      <div class="col-xs-12">
+        <form action="/data" method="post">
+          <input type="text" name="writing" id= "writingInput" required>
+          <input type="submit" value="write" class = "btn btn-primary btn-lg">
+        </form>
       </div>
     </div>
     <div class="row">
