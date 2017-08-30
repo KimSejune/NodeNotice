@@ -1,0 +1,16 @@
+ {
+  padding: 20px;
+  width: 100%;
+}
+#writingInput {
+  height: 200px;
+  width: 500px;
+}
+.row {
+  margin: 20px;
+}
+th, td{
+  text-align: center;
+  width: 300px;
+  height: 50px;
+}
