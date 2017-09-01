@@ -1,63 +1,55 @@
 const express = require('express')
-const basicAuth = require('express-basic-auth')
 const bodyParser = require('body-parser')
-const uuidv4 = require('uuid/v4')
-const app = express()
 
+const app = express()
+const urlencodeParser = bodyParser.urlencoded({extended: false})
+
+let i = 1;
 
 const datas = [
   {
-    id: uuidv4(),
-    writing: 'my name is sejune kim'
+    id : i,
+    writing : 'hello my name is sejune',
+    answer : ['first', 'second']
   }
 ]
 
-const authMiddleware = basicAuth({
-  users: { 'admin': 'admin' },
-  challenge: true,
-  realm: 'Imb4T3st4pp'
-})
-
-const bodyParserMiddleWare = bodyParser.urlencoded({ extended: false })
-
-app.set('view engine', 'ejs')
-
-
 app.use('/static', express.static('public'))
 
-// 초기값 읽어오기
-app.get('/', (req, res) => {
-  res.render('index.ejs', {datas})
+// 처음 data의 값을 가져온다.
+app.get('/', (req,res) => {
+  res.render('first.ejs', {datas})
 })
 
-// 게시판 댓글달기 페이지 이동
-app.get('/data/:id', (req, res) => {
-  const data = datas.find(d => d.id === req.params.id)
-  if(data){
-    res.render('data.ejs', {data})
-  }else {
-    res.status(404)
-    res.send('404 Not Found')
-  }
-})
-
-// 게시판 추가
-app.post('/data', bodyParserMiddleWare, (req,res) => {
+// 게시판의 글을 추가한다.
+app.post('/data', urlencodeParser, (req, res) => {
   const writing = req.body.writing
-
   if(writing){
     const data = {
-      id: uuidv4(),
-      writing
+      id : ++i,
+      writing,
     }
     datas.push(data)
     res.redirect('/')
   }else {
     res.status(400)
-    res.send('400 Bad Requset')
-  }
+    res.send('400 Bad Request')
+  }, 
 })
 
+// 선택한 게시판의 화면으로 이동
+app.get('/data/:id', (req, res) => {
+  const data = datas.find(element => elemnet.id === req.params.id)
+  if(data){
+    res.render('second.ejs', {data})
+  }else {
+    res.status(404)
+    res.send('404 Not Found')
+  }
+
+})
+
+
 app.listen('3100', () => {
-  console.log('NodeNotice Server Start!!!!!!!!!')
+  console.log('Connect Success!!!!!!!!!!!!!!!')
 })
