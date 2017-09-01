@@ -1,3 +1,14 @@
+body {
+  padding: 20px;
+}
+
 li {
   list-style: none;
+}
+
+.box {
+  border: 1px solid black;
+  width: 50%;
+  height: 200px;
+  overflow: hidden;
 }

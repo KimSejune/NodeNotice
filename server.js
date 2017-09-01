@@ -21,6 +21,17 @@ app.get('/', (req,res) => {
   res.render('first.ejs', {datas})
 })
 
+// 선택한 게시판의 화면으로 이동
+app.get('/data/:id', (req, res) => {
+  const data = datas.find(d => d.id.toString() === req.params.id)
+  if(data){
+    res.render('second.ejs', {data})  
+  }else {
+    res.status(404)
+    res.send('404 Not Found')
+  }
+})
+
 // 게시판의 글을 추가한다.
 app.post('/data', urlencodeParser, (req, res) => {
   const writing = req.body.writing
@@ -34,20 +45,10 @@ app.post('/data', urlencodeParser, (req, res) => {
   }else {
     res.status(400)
     res.send('400 Bad Request')
-  }, 
-})
-
-// 선택한 게시판의 화면으로 이동
-app.get('/data/:id', (req, res) => {
-  const data = datas.find(element => elemnet.id === req.params.id)
-  if(data){
-    res.render('second.ejs', {data})
-  }else {
-    res.status(404)
-    res.send('404 Not Found')
   }
-
 })
+
+
 
 
 app.listen('3100', () => {
