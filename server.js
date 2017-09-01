@@ -48,7 +48,25 @@ app.post('/data', urlencodeParser, (req, res) => {
   }
 })
 
+// 게시판의 댓글을 추가한다.
 
+app.post('/data/:id/answer', urlencodeParser, (req, res) => {
+  const data = datas.find(d => d.id.toString() === req.params.id)
+  if(data){
+    const answer = req.body.answer
+    if(answer){
+      data.answer[data.answer.length] = answer;
+      console.log(data.answer)
+      res.redirect('/data/' + `${data.id}`)
+    }else {
+      res.status(400)
+      res.send('400 Bad Request')      
+    }
+  }else{
+    res.status(400)
+    res.send('400 Bad Request')
+  }
+})
 
 
 app.listen('3100', () => {

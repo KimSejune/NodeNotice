@@ -15,7 +15,7 @@
       <%= data.writing %>
     </div>
 
-    <form action="/answer" method="post">
+    <form action="/data/<%= data.id %>/answer" method="post">
       <input type="text" name = "answer" required>
       <input type="submit" value="댓글달기">
     </form>
