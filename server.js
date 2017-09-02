@@ -23,9 +23,6 @@ const datas = [{
 
 app.use('/static', express.static('public'))
 
-app.use
-
-
 // 처음 data의 값을 가져온다.
 app.get('/', (req, res) => {
   res.render('first.ejs', {datas})
@@ -68,8 +65,13 @@ app.post('/data/:id/answer', urlencodeParser, (req, res) => {
     const answer = req.body.answer
     if (answer) {
       // 댓글중의 마지막요소에 answer을 추가한다.
-      data.answer[data.answer.length] = answer;
-      res.redirect('/data/' + `${data.id}`)
+      if(data.answer == undefined){
+        data.answer = [answer]
+        res.redirect('/data/' + `${data.id}`)
+      }else {
+        data.answer[data.answer.length] = answer
+        res.redirect('/data/' + `${data.id}`)
+      }
     } else {
       res.status(400)
       res.send('400 Bad Request')
@@ -97,7 +99,6 @@ app.post('/delete/:id', adminAuth, (req, res) => {
     res.status(400)
     res.send('400 Bad Request')
   }
-
 })
 
 app.listen('3100', () => {
