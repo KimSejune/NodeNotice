@@ -20,9 +20,12 @@
       <input type="submit" value="댓글달기">
     </form>
     <ul>
-      <% data.answer.forEach(ele => { %>
+    <%  if(data.answer){ %>
+              <% data.answer.forEach(ele => { %>
         <li><%= ele %></li>
        <% }) %>
+     <% } %>
+
     </ul>
 
   </div>

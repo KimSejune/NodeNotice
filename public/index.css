@@ -1,5 +1,5 @@
 body {
-  padding: 20px;
+  padding: 10px;
 }
 
 li {
@@ -10,5 +10,15 @@ li {
   border: 1px solid black;
   width: 50%;
   height: 200px;
-  overflow: hidden;
+  overflow: auto;
 }
+table{
+  margin-top: 20px;
+  table-layout: fixed;
+  text-align: center;
+}
+
+tr:last-child + input{
+  width: 100%;
+}
+

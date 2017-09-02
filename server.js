@@ -2,31 +2,33 @@ const express = require('express')
 const bodyParser = require('body-parser')
 
 const app = express()
-const urlencodeParser = bodyParser.urlencoded({extended: false})
+const urlencodeParser = bodyParser.urlencoded({
+  extended: false
+})
 
 let i = 1;
 
-const datas = [
-  {
-    id : i,
-    writing : 'hello my name is sejune',
-    answer : ['first', 'second']
-  }
-]
+const datas = [{
+  id: i,
+  writing: 'hello my name is sejune',
+  answer: ['first', 'second']
+}]
 
 app.use('/static', express.static('public'))
 
 // 처음 data의 값을 가져온다.
-app.get('/', (req,res) => {
+app.get('/', (req, res) => {
   res.render('first.ejs', {datas})
 })
 
 // 선택한 게시판의 화면으로 이동
 app.get('/data/:id', (req, res) => {
   const data = datas.find(d => d.id.toString() === req.params.id)
-  if(data){
-    res.render('second.ejs', {data})  
-  }else {
+  if (data) {
+    res.render('second.ejs', {
+      data
+    })
+  } else {
     res.status(404)
     res.send('404 Not Found')
   }
@@ -35,14 +37,14 @@ app.get('/data/:id', (req, res) => {
 // 게시판의 글을 추가한다.
 app.post('/data', urlencodeParser, (req, res) => {
   const writing = req.body.writing
-  if(writing){
+  if (writing) {
     const data = {
-      id : ++i,
+      id: ++i,
       writing,
     }
     datas.push(data)
     res.redirect('/')
-  }else {
+  } else {
     res.status(400)
     res.send('400 Bad Request')
   }
@@ -52,22 +54,41 @@ app.post('/data', urlencodeParser, (req, res) => {
 
 app.post('/data/:id/answer', urlencodeParser, (req, res) => {
   const data = datas.find(d => d.id.toString() === req.params.id)
-  if(data){
+  if (data) {
     const answer = req.body.answer
-    if(answer){
+    if (answer) {
+      // 댓글중의 마지막요소에 answer을 추가한다.
       data.answer[data.answer.length] = answer;
-      console.log(data.answer)
       res.redirect('/data/' + `${data.id}`)
-    }else {
+    } else {
       res.status(400)
-      res.send('400 Bad Request')      
+      res.send('400 Bad Request')
     }
-  }else{
+  } else {
     res.status(400)
     res.send('400 Bad Request')
   }
 })
 
+// 관리자가 글을 삭제할 곳으로 이동.
+app.get('/delete', (req, res) => {
+  res.render('third.ejs', {datas})
+})
+
+
+// 관리자가 글을 삭제할 수 있도록 한다. input의 type은 submit이여야한다.
+app.post('/delete/:id', (req, res) => {
+  console.log('hi')
+  const dataIndex = datas.findIndex(data => data.id.toString() === req.params.id)
+  if(dataIndex !== -1){
+    datas.splice(dataIndex, 1)
+    res.redirect('/delete')
+  }else {
+    res.status(400)
+    res.send('400 Bad Request')
+  }
+
+})
 
 app.listen('3100', () => {
   console.log('Connect Success!!!!!!!!!!!!!!!')

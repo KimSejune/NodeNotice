@@ -9,6 +9,28 @@
   <title>Document</title>
 </head>
 <body>
-
+<h3>관리자 삭제 페이지</h3>
+  <table class = "table table-bordered">
+    <thead>
+      <tr>
+        <td>Number</td>
+        <td>Contents</td>
+        <td>Delete</td>
+      </tr>
+    </thead>
+    <tbody>
+      <% datas.forEach(data => { %>
+        <tr>
+          <td><%= data.id %></td>
+          <td><%= data.writing %></td>
+          <td> 
+            <form id = "form-delete" action = "/delete/<%= data.id %>" method="post">
+              <input form = "form-delete" class="btn-sm btn-info" type="submit" value="삭제"> 
+            </form>
+          </td>
+        </tr>
+      <%}) %>
+    </tbody>
+  </table>
 </body>
 </html>

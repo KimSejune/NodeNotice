@@ -13,13 +13,29 @@
     <h3>익명 게시판</h3>
     <form action="/data" method="post">
       <input type="text" name="writing" required>
-      <input type="submit" value = "글쓰기">
+      <input class= "btn-sm btn-info" type="submit" value = "글쓰기">
+      <form action"/delete" method="post">
+        <a href="/delete"><input class="btn-sm btn-info" type="button" value="삭제"> </a>
+      </form>
     </form>
-    <ul>
-      <% datas.forEach(data => { %>
-      <li><a href="/data/<%= data.id %>"><%= data.id %> <%= data.writing %></a></li>   
+
+    <table class="table table-bordered">
+
+      <thead>
+        <tr>
+          <td>Number</td>
+          <td>Contents</td>
+        </tr>  
+      </thead>
+      <tbody
+        <% datas.forEach(data => { %>  
+        <tr>
+        <td><%= data.id %>.</td>
+        <td><a href="/data/<%= data.id %>"><%= data.writing %></a></td>
+        </tr>
+      </tbody>
     <%})%>
-    </ul>
+    </table>
   </div>
 </body>
 </html>
