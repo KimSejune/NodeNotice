@@ -90,7 +90,6 @@ app.get('/delete', adminAuth, (req, res) => {
 
 // 관리자가 글을 삭제할 수 있도록 한다. input의 type은 submit이여야한다.
 app.post('/delete/:id', adminAuth, (req, res) => {
-  console.log('hi')
   const dataIndex = datas.findIndex(data => data.id.toString() === req.params.id)
   if(dataIndex !== -1){
     datas.splice(dataIndex, 1)
